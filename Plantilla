@@ -1,0 +1,58 @@
+# Instalar y cargar paquetes necesarios
+install.packages("readxl")
+install.packages("ggplot2")
+library(readxl)
+library(ggplot2)
+
+# 1. Cargar los datos desde un archivo Excel
+ruta_archivo <- "ruta/del/archivo.xlsx"  # Cambia esta ruta al archivo de tu base de datos
+data <- read_excel(ruta_archivo)
+
+#1.2 Asignar valores
+# Acceder a la columna 'nombre'
+nombres <- datos$nombre  # Esto devuelve un vector con los nombres
+print(nombres)
+
+# 2. Convertir columnas en factores ordinales
+# Define las columnas que deseas convertir en factores ordinales y sus niveles
+# Ejemplo de configuración de una columna ordinal:
+data$Nombre_Columna <- factor(data$Nombre_Columna, levels = c("Nivel1", "Nivel2", "Nivel3"), ordered = TRUE)
+
+
+# Análisis de Variables Cualitativas----------------------
+
+# 1. Crear tabla de frecuencias absolutas
+Tabularni <- table(nombre_dataframe$nombre_variable)
+
+# 2. Calcular frecuencia absoluta acumulada
+frec.absolutaNi <- cumsum(Tabularni)
+
+# 3. Calcular frecuencia relativa
+fi <- Tabularni / sum(Tabularni)
+
+# 4. Calcular frecuencia relativa acumulada
+Fi <- cumsum(fi)
+
+# 5. Crear tabla de resultados
+Rt <- cbind(Tabularni, frec.absolutaNi, fi, Fi)
+
+# 6. Crear gráfico de pastel
+pie(fi, main = "Distribución de la variable 'nombre_variable'")
+
+# 7. Generar etiquetas de porcentaje
+percent_labels <- paste(round(fi * 100, 1), "%")
+
+# 8. Crear gráfico de pastel con etiquetas
+pie(fi, main = "Distribución de la variable 'nombre_variable'", labels = percent_labels)
+
+# 9. Crear gráfico de barras
+barplot(fi, main = "Distribución de la variable 'nombre_variable'", 
+        xlab = "Probabilidad", ylab = "Frecuencia", col = "red")
+
+# 10. Crear gráfico de barras con espacio
+barplot_heights <- barplot(fi, main = "Distribución de la variable 'nombre_variable'", 
+                           xlab = "Probabilidad", ylab = "Frecuencia", col = "red", space = 0.5)
+
+# Añadir etiquetas a las barras
+text(barplot_heights, fi, labels = round(fi * 100, 1), pos = 3)
+
